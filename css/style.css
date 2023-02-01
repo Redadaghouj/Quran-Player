@@ -1,7 +1,5 @@
 /* Global Config */
 
-:root {}
-
 * {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -12,9 +10,11 @@
 
 body {
     font-family: 'Cairo', sans-serif;
+    background: url(../img/bg4.png) center center/cover no-repeat fixed;
 }
 
 html {
+    direction: rtl;
     scroll-behavior: smooth;
 }
 
@@ -54,4 +54,132 @@ a {
     .container {
         width: 1170px;
     }
+}
+
+/* End Global Config */
+
+.header {
+    background-image: linear-gradient(to right, #000, #424242);
+    margin: 10px 0 20px;
+    padding: 20px;
+    color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 99;
+    box-shadow: rgba(149, 157, 165, 0.5) 0px 8px 24px;
+}
+
+.header .ayah {
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+}
+
+.header .quran-player {
+    width: 100%;
+    height: 40px;
+    margin: 30px 0 20px;
+}
+
+.header .controls {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header .controls button {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: opacity .5s;
+}
+
+.header .controls button:hover {
+    opacity: .9;
+}
+
+.content .surah-box {
+    cursor: pointer;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #999;
+    padding: 10px 20px;
+    position: relative;
+    width: calc(100% - 90px);
+    transition: background-color .5s;
+    counter-increment: ayah;
+}
+
+.content .surah-box:hover {
+    background-color: #333;
+}
+
+.content .surah-box::before {
+    content: counter(ayah);
+    position: absolute;
+    left: -93px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #999;
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color .5s, background-color .5s;
+}
+
+.content .surah-box:hover::before {
+    background-color: #333;
+    color: #fff;
+}
+
+.content .surah-box::after {
+    content: "";
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 10px solid transparent;
+    border-right-color: #333;
+}
+
+.content .ar-name,
+.content .surah-box .en-name {
+    transition: color .5s;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.content .surah-box:hover .ar-name,
+.content .surah-box:hover .en-name {
+    color: #fff;
+}
+
+.content .surah-box .ayah-num {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 1px solid #999;
+    font-size: 25px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    transition: color .5s, background-color .5s;
+}
+
+.content .surah-box:hover .ayah-num {
+    background-color: #333;
+    color: #fff;
 }
