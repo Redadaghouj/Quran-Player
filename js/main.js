@@ -1,11 +1,13 @@
 // Link API
-// http://api.alquran.cloud/v1/quran/ar.alafasy
+// http://api.alquran.cloud/v1/surah/1/ar.alafasy
+// http://api.alquran.cloud/v1/meta
 
 let content = document.querySelector(".content");
 let audio = document.querySelector(".quran-player");
 let playBtn = document.querySelector(".play"),
   prevBtn = document.querySelector(".prev"),
   nextBtn = document.querySelector(".next");
+let ayahArea = document.querySelector(".ayah");
 
 async function getQuranApi() {
   url = "http://api.alquran.cloud/v1/meta";
@@ -35,30 +37,50 @@ function drawUi(surah) {
 }
 
 let surah;
-let i = 0;
+let ayahIndex;
 async function getQuranAudioApi(index) {
-  let url = "http://api.alquran.cloud/v1/quran/ar.alafasy";
-
+  let url = `http://api.alquran.cloud/v1/surah/${index + 1}/ar.alafasy`;
   let res = await fetch(url);
   let data = await res.json();
-  surah = data.data.surahs[index].ayahs;
-  //   setInterval(() => {
-  audio.setAttribute("src", surah[i].audio);
-  audio.play();
+  surah = data.data.ayahs;
 
-  //   });
+  ayahIndex = -1;
+  ayahChange(++ayahIndex);
+  paused = false;
+  playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+  audio.addEventListener("ended", () => {
+    ayahChange(++ayahIndex);
+  });
+}
+
+let paused = true;
+function ayahChange(i) {
+  if (i >= surah.length || i < 0) {
+    ayahArea.textContent = "اضغط علي السورة للاستماع اليها";
+    audio.pause();
+  } else {
+    audio.setAttribute("src", surah[i].audio);
+    ayahArea.innerHTML = surah[i].text;
+    audio.play();
+  }
 }
 
 nextBtn.addEventListener("click", () => {
-  audio.setAttribute("src", surah[++i].audio);
-  audio.play();
+  ayahChange(++ayahIndex);
 });
 
 prevBtn.addEventListener("click", () => {
-  audio.setAttribute("src", surah[--i].audio);
-  audio.play();
+  ayahChange(--ayahIndex);
 });
 
 playBtn.addEventListener("click", () => {
-  audio.pause();
+  if (paused) {
+    audio.play();
+    playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+    paused = false;
+  } else {
+    audio.pause();
+    playBtn.innerHTML = `<i class="fa-solid fa-play">`;
+    paused = true;
+  }
 });
