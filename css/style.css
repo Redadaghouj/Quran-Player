@@ -18,6 +18,27 @@ html {
     scroll-behavior: smooth;
 }
 
+/* ===== Scrollbar CSS ===== */
+/* Firefox */
+* {
+    scrollbar-width: auto;
+    scrollbar-color: #333333 #ffffff;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 20px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #333333;
+    border: 1px solid #ffffff;
+}
+
 ul {
     list-style: none;
     margin: 0;

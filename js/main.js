@@ -1,10 +1,6 @@
-// Link API
-// http://api.alquran.cloud/v1/surah/1/ar.alafasy
-// http://api.alquran.cloud/v1/meta
-
 let content = document.querySelector(".content");
 let audio = document.querySelector(".quran-player");
-let playBtn = document.querySelector(".play"),
+let playToggleBtn = document.querySelector(".play"),
   prevBtn = document.querySelector(".prev"),
   nextBtn = document.querySelector(".next");
 let ayahArea = document.querySelector(".ayah");
@@ -49,7 +45,7 @@ async function getQuranAudioApi(index) {
   ayahIndex = 0;
   ayahChange();
   paused = false;
-  playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+  playToggleBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
   audio.addEventListener("ended", () => {
     ayahIndex++;
     ayahChange();
@@ -78,15 +74,15 @@ prevBtn.addEventListener("click", () => {
   ayahChange();
 });
 
-playBtn.addEventListener("click", () => {
+playToggleBtn.addEventListener("click", () => {
   if (surah) {
     if (paused) {
       audio.play();
-      playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+      playToggleBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
       paused = false;
     } else {
       audio.pause();
-      playBtn.innerHTML = `<i class="fa-solid fa-play">`;
+      playToggleBtn.innerHTML = `<i class="fa-solid fa-play">`;
       paused = true;
     }
   }
