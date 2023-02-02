@@ -46,33 +46,36 @@ async function getQuranAudioApi(index) {
   let data = await res.json();
   surah = data.data.ayahs;
 
-  ayahIndex = -1;
-  ayahChange(++ayahIndex);
+  ayahIndex = 0;
+  ayahChange();
   paused = false;
   playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
   audio.addEventListener("ended", () => {
-    ayahChange(++ayahIndex);
+    ayahIndex++;
+    ayahChange();
   });
 }
 
-function ayahChange(i) {
+function ayahChange() {
   if (surah) {
-    if (i >= surah.length || i < 0) {
+    if (ayahIndex >= surah.length) {
       ayahIndex = 0;
-      i = ayahIndex;
-      audio.load();
+    } else if (ayahIndex < 0) {
+      ayahIndex = surah.length - 1;
     }
-    audio.setAttribute("src", surah[i].audio);
-    ayahArea.innerHTML = surah[i].text;
+    audio.setAttribute("src", surah[ayahIndex].audio);
+    ayahArea.innerHTML = surah[ayahIndex].text;
   }
 }
 
 nextBtn.addEventListener("click", () => {
-  ayahChange(++ayahIndex);
+  ayahIndex++;
+  ayahChange();
 });
 
 prevBtn.addEventListener("click", () => {
-  ayahChange(--ayahIndex);
+  ayahIndex--;
+  ayahChange();
 });
 
 playBtn.addEventListener("click", () => {
