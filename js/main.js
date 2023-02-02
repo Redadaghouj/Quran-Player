@@ -38,6 +38,8 @@ function drawUi(surah) {
 
 let surah;
 let ayahIndex;
+let paused = true;
+
 async function getQuranAudioApi(index) {
   let url = `http://api.alquran.cloud/v1/surah/${index + 1}/ar.alafasy`;
   let res = await fetch(url);
@@ -53,15 +55,15 @@ async function getQuranAudioApi(index) {
   });
 }
 
-let paused = true;
 function ayahChange(i) {
-  if (i >= surah.length || i < 0) {
-    ayahArea.textContent = "اضغط علي السورة للاستماع اليها";
-    audio.pause();
-  } else {
+  if (surah) {
+    if (i >= surah.length || i < 0) {
+      ayahIndex = 0;
+      i = ayahIndex;
+      audio.load();
+    }
     audio.setAttribute("src", surah[i].audio);
     ayahArea.innerHTML = surah[i].text;
-    audio.play();
   }
 }
 
@@ -74,13 +76,15 @@ prevBtn.addEventListener("click", () => {
 });
 
 playBtn.addEventListener("click", () => {
-  if (paused) {
-    audio.play();
-    playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
-    paused = false;
-  } else {
-    audio.pause();
-    playBtn.innerHTML = `<i class="fa-solid fa-play">`;
-    paused = true;
+  if (surah) {
+    if (paused) {
+      audio.play();
+      playBtn.innerHTML = `<i class="fa-solid fa-pause"></i>`;
+      paused = false;
+    } else {
+      audio.pause();
+      playBtn.innerHTML = `<i class="fa-solid fa-play">`;
+      paused = true;
+    }
   }
 });
