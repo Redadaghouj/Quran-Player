@@ -11,7 +11,7 @@ A web-based Quran player template that lets users listen to Quranic recitations.
 ## Installation  
 1. Clone the repository:  
    ```bash  
-   git clone https://github.com/Redadaghouj/Quran_Player.git  
+   git clone https://github.com/Redadaghouj/Quran-Player.git  
    ```  
 2. Open `index.html` in your browser to preview.
 
